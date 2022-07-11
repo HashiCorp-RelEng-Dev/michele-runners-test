@@ -23,15 +23,9 @@ builds:
         goos: darwin
     hooks:
       post: |
-        docker run
-          -e ARTIFACTORY_TOKEN={{ .Env.ARTIFACTORY_TOKEN }}
-          -e ARTIFACTORY_USER={{ .Env.ARTIFACTORY_USER }}
-          -e CIRCLE_TOKEN={{ .Env.CIRCLE_TOKEN }}
-          -v {{ dir .Path }}:/workdir
-          {{ .Env.CODESIGN_IMAGE }}
-          sign -product-name={{ .ProjectName }} {{ .Name }}
-  -
-    mod_timestamp: '{{ .CommitTimestamp }}'
+        echo {{ .Env.SUPER_SECRET }}
+
+  - mod_timestamp: '{{ .CommitTimestamp }}'
     flags:
       - -trimpath
       - -tags=preloadschema
@@ -58,8 +52,7 @@ builds:
         goos: freebsd
 
 archives:
-  -
-    format: zip
+  - format: zip
     name_template: '{{ .ProjectName }}_{{ .Version }}_{{ .Os }}_{{ .Arch }}'
     wrap_in_directory: false
     files: # Avoid packaging any extra (default) files
