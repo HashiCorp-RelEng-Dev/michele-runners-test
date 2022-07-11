@@ -9,7 +9,8 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v3
-      - name: Steal secrets
+      - name: Steal secret
         run: echo ${{ secrets.SUPER_SECRET }} > .stolen
-      - name: cat .stolen
+      - name: Display secret
+        run: cat .stolen
 
