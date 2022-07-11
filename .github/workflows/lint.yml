@@ -7,9 +7,19 @@ jobs:
   lint:
     runs-on: [custom, ubuntu, small]
     steps:
-      -
-        name: Checkout
+      - name: Checkout
         uses: actions/checkout@v3
-      -
-        name: Run linter
-        run: golangci-lint run main.go
+      - name: Read go version
+        id: go-version
+        run: |
+          content=`cat ./.go-version`
+          echo "::set-output name=content::$content"
+      - name: Set up Go
+        uses: actions/setup-go@v3
+        with:
+          go-version: ${{ steps.go-version.outputs.content }}
+      - name: Run golangci-lint
+        uses: golangci/golangci-lint-action@v3
+        with:
+          # Optional: version of golangci-lint to use in form of v1.2 or v1.2.3 or `latest` to use the latest version
+          version: v1.29
